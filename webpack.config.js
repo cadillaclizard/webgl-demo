@@ -50,6 +50,7 @@ module.exports = {
     new HtmlWebpackPlugin({ template: './src/index.html' })
   ],
   resolve: {
-    alias: { 'vue$': 'vue/dist/vue.esm.js' }
+    alias: { 'vue$': 'vue/dist/vue.esm.js' },
+    extensions: ['.ts', '.js', '.json']
   }
 };

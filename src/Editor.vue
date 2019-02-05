@@ -1,30 +1,25 @@
 <template>
-  <div class="editor">
-    <span>Editor Component</span>
-  </div>
+  <div class="editor" />
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import Renderer from './Renderer';
 
 @Component
 export default class EditorComponent extends Vue {
-    
+    renderer: Renderer = new Renderer();
+
+    mounted() {
+      this.renderer.mount(this.$el)
+    }
 }
 </script>
 
 <style lang="scss" scoped>
 .editor {
-  display: flex;
   flex: 1;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #05396BFF;
-}
-
-.editor > span {
-  font-size: 26px;
-  text-decoration: underline;
+  overflow: hidden;
 }
 </style>
