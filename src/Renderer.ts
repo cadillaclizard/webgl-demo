@@ -1,18 +1,17 @@
 import * as THREE from "three";
-
-interface MousePos {
-  x: number;
-  y: number;
-}
+import { DoubleSide } from "three";
+import Cube3D from "./Object3D/Cube3D";
+import Mouse from "./Mouse/Mouse";
 
 export default class Renderer {
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(45, 4 / 3, 1, 2000);
   renderer = new THREE.WebGLRenderer({
     devicePixelRatio: window.devicePixelRatio,
+    alpha: true,
+    antialias: true
   });
-  mouse: MousePos = { x: 0, y: 0 }
-
+  mouse = new Mouse();
 
   constructor() {
     // Lights & Camera
@@ -27,7 +26,6 @@ export default class Renderer {
   public mount(container: Element) {
     // Mount events
     window.addEventListener("resize", this.onWindowResize, false);
-    document.addEventListener("mousemove", this.onDocumentMouseMove, false);
 
     // Request first animation frame    
     container.appendChild(this.renderer.domElement);
@@ -35,17 +33,16 @@ export default class Renderer {
     this.renderer.setAnimationLoop(this.renderScene);
     this.onWindowResize();
 
-    // temp
-    var geometry = new THREE.BoxBufferGeometry(50, 50, 50);
-    var material = new THREE.MeshLambertMaterial({ color: new THREE.Color(50, 0, 25) });
-    var mesh = new THREE.Mesh(geometry, material);
-    this.scene.add(mesh);
-    // temp    
+    var cube1 = new Cube3D(this.scene);
+    var cube2 = new Cube3D(this.scene);
+    cube1.translate(0, -50, 0);
+    cube2.translate(0, 50, 0);
   }
 
   private renderScene = () => {
     this.camera.position.x += (this.mouse.x - this.camera.position.x) * 0.05;
     this.camera.position.y += (-this.mouse.y - this.camera.position.y) * 0.05;
+
     this.camera.lookAt(this.scene.position);
     this.renderer.render(this.scene, this.camera);
   }
@@ -57,10 +54,5 @@ export default class Renderer {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
-  }
-
-  private onDocumentMouseMove = (e: MouseEvent) => {
-    this.mouse.x = (e.clientX - window.innerWidth / 2) / 2;
-    this.mouse.y = (e.clientY - window.innerHeight / 2) / 2;
   }
 }

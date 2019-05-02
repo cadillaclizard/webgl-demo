@@ -9,10 +9,10 @@ import Renderer from './Renderer';
 
 @Component
 export default class EditorComponent extends Vue {
-    renderer: Renderer = new Renderer();
+    renderer: Renderer = new Renderer(); // this.$parent
 
     mounted() {
-      this.renderer.mount(this.$el)
+      this.renderer.mount(this.$el);
     }
 }
 </script>
