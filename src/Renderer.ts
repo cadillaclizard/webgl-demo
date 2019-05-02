@@ -21,8 +21,8 @@ export default class Renderer {
     this.camera = new Camera(this.scene, new THREE.Vector3(0, 0, 250), pointLight);
 
     // Helper
-    var axisHelper = new THREE.AxesHelper(100);
-    this.scene.add(axisHelper);
+    this.scene.add(new THREE.AxesHelper(10000));
+    this.scene.add(new THREE.AxesHelper(-10000));
   }
 
   public mount(container: Element) {
@@ -37,10 +37,8 @@ export default class Renderer {
 
     var cube1 = new Cube3D(this.scene);
     var cube2 = new Cube3D(this.scene);
-    cube1.mesh.geometry.translate(-50, 0, 0);
-    cube1.autoRotateX();
-    cube2.translate(50, 0, 0);
-    cube2.autoRotateX();
+    cube1.mesh.translateX(-75);
+    cube2.mesh.translateX(75);
   }
 
   private renderScene = () => {
