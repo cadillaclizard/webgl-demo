@@ -1,26 +1,28 @@
 import * as THREE from "three";
-import { DoubleSide } from "three";
-import Cube3D from "./Object3D/Cube3D";
-import Mouse from "./Mouse/Mouse";
+import Cube3D from "./Util/Cube3D";
+import Mouse from "./Util/Mouse";
+import Camera from "./Util/Camera";
 
 export default class Renderer {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(45, 4 / 3, 1, 2000);
+  camera: Camera;
+  mouse = new Mouse();
   renderer = new THREE.WebGLRenderer({
     devicePixelRatio: window.devicePixelRatio,
     alpha: true,
     antialias: true
   });
-  mouse = new Mouse();
 
   constructor() {
     // Lights & Camera
     var ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
-    this.scene.add(ambientLight);
     var pointLight = new THREE.PointLight(0xffffff, 0.5);
-    this.camera.add(pointLight);
-    this.camera.position.z = 250;
-    this.scene.add(this.camera);
+    this.scene.add(ambientLight);    
+    this.camera = new Camera(this.scene, new THREE.Vector3(0, 0, 250), pointLight);
+
+    // Helper
+    var axisHelper = new THREE.AxesHelper(100);
+    this.scene.add(axisHelper);
   }
 
   public mount(container: Element) {
@@ -35,8 +37,10 @@ export default class Renderer {
 
     var cube1 = new Cube3D(this.scene);
     var cube2 = new Cube3D(this.scene);
-    cube1.translate(0, -50, 0);
-    cube2.translate(0, 50, 0);
+    cube1.mesh.geometry.translate(-50, 0, 0);
+    cube1.autoRotateX();
+    cube2.translate(50, 0, 0);
+    cube2.autoRotateX();
   }
 
   private renderScene = () => {
