@@ -1,15 +1,14 @@
 import * as THREE from "three";
-import { Vector3 } from "three";
+import Renderer from "../Renderer";
 
 export default class Camera extends THREE.PerspectiveCamera {
-  constructor(private scene: THREE.Scene, position = new Vector3(0, 0, 250), ...lights: THREE.Light[]) {
+  constructor() {
     super(45, 4 / 3, 1, 100000);
 
-    this.position.copy(position);
-    lights.forEach(light => this.add(light));
-    this.scene.add(this);
+    this.position.copy(new THREE.Vector3(50, 200, 250));
+    this.add(new THREE.PointLight(0xffffff, 0.5))
+    Renderer.Scene.add(this);
 
-    // Handle zoom
     document.addEventListener("wheel", (e: MouseWheelEvent) => {
       this.position.setZ(this.position.z + e.deltaY * 0.1);
     }, false);

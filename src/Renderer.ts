@@ -2,59 +2,69 @@ import * as THREE from "three";
 import Cube3D from "./Util/Cube3D";
 import Mouse from "./Util/Mouse";
 import Camera from "./Util/Camera";
+import Window from "./Util/Window";
 
 export default class Renderer {
-  scene = new THREE.Scene();
+  static Scene = new THREE.Scene();
+
+  window: Window;
   camera: Camera;
   mouse = new Mouse();
+  raycaster = new THREE.Raycaster();
   renderer = new THREE.WebGLRenderer({
-    devicePixelRatio: window.devicePixelRatio,
     alpha: true,
     antialias: true
   });
 
   constructor() {
-    // Lights & Camera
-    var ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
-    var pointLight = new THREE.PointLight(0xffffff, 0.5);
-    this.scene.add(ambientLight);    
-    this.camera = new Camera(this.scene, new THREE.Vector3(0, 0, 250), pointLight);
+    this.camera = new Camera();
+    this.window = new Window(this.renderer, this.camera);
 
     // Helper
-    this.scene.add(new THREE.AxesHelper(10000));
-    this.scene.add(new THREE.AxesHelper(-10000));
+    Renderer.Scene.add(new THREE.AxesHelper(10000));
+    Renderer.Scene.add(new THREE.AxesHelper(-10000));
   }
 
   public mount(container: Element) {
-    // Mount events
-    window.addEventListener("resize", this.onWindowResize, false);
-
     // Request first animation frame    
+    Renderer.Scene.add(new THREE.AmbientLight(0xffffff, 0.1));
     container.appendChild(this.renderer.domElement);
     this.renderer.setSize(container.clientWidth, container.clientHeight);
     this.renderer.setAnimationLoop(this.renderScene);
-    this.onWindowResize();
+    this.window.update();
 
-    var cube1 = new Cube3D(this.scene);
-    var cube2 = new Cube3D(this.scene);
+    // Temp
+    var cube1 = new Cube3D();
+    var cube2 = new Cube3D();
     cube1.mesh.translateX(-75);
     cube2.mesh.translateX(75);
   }
 
   private renderScene = () => {
-    this.camera.position.x += (this.mouse.x - this.camera.position.x) * 0.05;
-    this.camera.position.y += (-this.mouse.y - this.camera.position.y) * 0.05;
+    /* Camera rotation on mouse
+    // this.camera.position.x += (this.mouse.x - this.camera.position.x) * 0.05;
+    // this.camera.position.y += (-this.mouse.y - this.camera.position.y) * 0.05;
+    */
+    this.camera.lookAt(Renderer.Scene.position);
+    this.raycaster.setFromCamera(this.mouse, this.camera);
 
-    this.camera.lookAt(this.scene.position);
-    this.renderer.render(this.scene, this.camera);
-  }
+    var intersects = this.raycaster.intersectObjects(Renderer.Scene.children, true);
+    intersects.forEach(intersection => {
+      console.debug((intersection.object as any).constructor.name);
+    });
+    /*if (intersects.length > 0) {
+      if (this.INTERSECTED != intersects[0].object.position) {
+        if (this.INTERSECTED) this.INTERSECTED.material.emissive.setHex(this.INTERSECTED.currentHex);
+        INTERSECTED = intersects[0].object;
+        INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+        INTERSECTED.material.emissive.setHex(0xff0000);
+      }
+    } else {
+      if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+      INTERSECTED = null;
+    }*/
 
-  private onWindowResize = () => {
-    let width = this.renderer.domElement.parentElement!.clientWidth;
-    let height = this.renderer.domElement.parentElement!.clientHeight;
+    this.renderer.render(Renderer.Scene, this.camera);
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(width, height);
   }
 }
