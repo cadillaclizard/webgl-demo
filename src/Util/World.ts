@@ -1,29 +1,28 @@
-import Cube3D from "./Cube3D";
-import * as SimplexNoise from "simplex-noise";
-import { Camera, Vector3, Raycaster, Object3D } from "three";
 import Renderer from "../Renderer";
+import * as SimplexNoise from "simplex-noise";
+import * as THREE from "three";
+import { Vector3 } from "three";
 
 export default class World {
+  terrainMesh = new THREE.Mesh();
   lastCameraPos = new Vector3();
   noise = new SimplexNoise();
-  radius = 5;
-  //heights = new Array<number[][]>();
+  cubesPos = new Array<Vector3>();
+  radius = 25;
 
-  constructor(private camera: Camera) {
-    this.generateTerrain(this.camera.position.x, this.camera.position.z);
+  constructor(private camera: THREE.Camera) {
+    Renderer.Scene.add(this.terrainMesh);
+    this.generateTerrain();
   }
 
   generateTerrain(centerX = 0, centerZ = 0) {
+    this.computeHeights(centerX, centerZ);
+    this.computeTerrain();
+  }
+
+  private computeHeights(centerX = 0, centerZ = 0) {
+    this.cubesPos = new Array<Vector3>();
     let rr = this.radius * this.radius;
-    //this.heights = new Array<number[][]>();
-
-    do {
-      var cube = Renderer.Scene.getObjectByName("cube")
-
-      if (cube != undefined) {
-        Renderer.Scene.remove(cube);
-      }
-    } while (cube != undefined);
 
     for (let x = - this.radius; x < this.radius; x++) {
       for (let z = -this.radius; z < this.radius; z++) {
@@ -31,10 +30,39 @@ export default class World {
 
         var posX = x + centerX;
         var posZ = z + centerZ;
-        var y = this.noise.noise2D(posX / 75, posZ / 75);
-        new Cube3D(posX, Math.round(y * 5), posZ)
+        var noiseValue = this.noise.noise2D(posX / 75, posZ / 75);
+        var posY = Math.round(noiseValue * 10);
+        this.cubesPos.push(new Vector3(posX, posY, posZ));
       }
     }
+  }
+
+  private computeTerrain() {
+    var light = new THREE.Color(0xffffff);
+    var geometry = new THREE.Geometry();
+
+    var pyGeometry = new THREE.PlaneGeometry(10, 10);
+    pyGeometry.faces[0].vertexColors = [light, light, light];
+    pyGeometry.faces[1].vertexColors = [light, light, light];
+    pyGeometry.faceVertexUvs[0][0][1].y = 0.5;
+    pyGeometry.faceVertexUvs[0][1][0].y = 0.5;
+    pyGeometry.faceVertexUvs[0][1][1].y = 0.5;
+    pyGeometry.rotateX(-Math.PI / 2);
+
+    this.cubesPos.forEach(pos => {
+      var cubeGeometry = pyGeometry.clone();
+      var posX = pos.x * 10 + 5;
+      var posY = pos.y * 10 + 5;
+      var posZ = pos.z * 10 + 5;
+
+      cubeGeometry.translate(posX, posY, posZ);
+      geometry.merge(cubeGeometry);
+    });
+
+    var bufferGeometry = new THREE.BufferGeometry().fromGeometry( geometry );
+    this.terrainMesh.geometry = bufferGeometry;
+    this.terrainMesh.material = new THREE.MeshNormalMaterial();
+    this.terrainMesh.updateMatrix();
   }
 
   update() {
@@ -42,8 +70,8 @@ export default class World {
     var direction = new Vector3();
     this.camera.getWorldDirection(direction);
     var grid = Renderer.Scene.getObjectByName("grid");
-    var raycaster = new Raycaster(origin, direction);
-    var inter = raycaster.intersectObject(grid as Object3D);
+    var raycaster = new THREE.Raycaster(origin, direction);
+    var inter = raycaster.intersectObject(grid as THREE.Object3D);
 
     if (inter[0] == undefined) return;
 
