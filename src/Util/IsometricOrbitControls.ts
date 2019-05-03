@@ -1,16 +1,20 @@
-import IsometricCamera from "./IsometricCamera";
-import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import { MOUSE, Camera } from "three";
 
-export default class IsometricOrbitControls extends THREE.OrbitControls {
-  constructor(camera: IsometricCamera, domElement?: HTMLElement) {
+export default class IsometricOrbitControls extends OrbitControls {
+  maxPolarAngle = Math.PI / 4; // Isometric angle
+  minPolarAngle = Math.PI / 4; // Isometric angle
+
+  rotateSpeed: number = 1;
+  panSpeed: number = 1;
+  dampingFactor = .1;
+
+  //enableDamping = true;
+  enableZoom = true;
+  enablePan = true;
+
+  constructor(camera: Camera) {
     super(camera);
-
-    this.maxPolarAngle = Math.PI / 4;
-    this.minPolarAngle = this.maxPolarAngle;
-    this.enableZoom = true;
-    this.enablePan = true;
-    this.enableKeys = true;
-    this.enableDamping = true;
-    this.dampingFactor = 0.1;
+    this.mouseButtons.PAN = MOUSE.LEFT;
   }
 }

@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "outDir": "./build/",
     "sourceMap": true,
     "target": "es5",
@@ -14,10 +13,7 @@
     "lib": [
       "es2016",
       "dom"
-    ],
-    "paths": {
-      "three-full": ["node_modules/@types/three"]
-    }
+    ]
   },
   "include": [
     "./src/**/*"
