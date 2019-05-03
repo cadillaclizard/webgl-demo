@@ -1,12 +1,13 @@
 import * as THREE from "three";
 
-export default class Mouse extends THREE.Vector2 {
+export default class Mouse extends THREE.Vector3 {
   constructor() {
     super();
 
     document.addEventListener("mousemove", (e: MouseEvent) => {
-      this.x = (e.clientX - window.innerWidth / 2) / 2;
-      this.y = (e.clientY - window.innerHeight / 2) / 2;
+      e.preventDefault();
+      this.x = (e.clientX / window.innerWidth) * 2 - 1;
+      this.y = - (e.clientY / window.innerHeight) * 2 + 1;
     }, false);
   }
 }

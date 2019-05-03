@@ -8,12 +8,9 @@ export default class Window {
   }
 
   private onWindowResize = () => {
-    let width = this.renderer.domElement.parentElement!.clientWidth;
-    let height = this.renderer.domElement.parentElement!.clientHeight;
-
-    this.camera.aspect = width / height;
+    this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(width, height);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   update() { this.onWindowResize(); }

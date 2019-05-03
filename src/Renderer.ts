@@ -3,6 +3,7 @@ import Cube3D from "./Util/Cube3D";
 import Mouse from "./Util/Mouse";
 import Camera from "./Util/Camera";
 import Window from "./Util/Window";
+import { Object3D } from "three";
 
 export default class Renderer {
   static Scene = new THREE.Scene();
@@ -15,6 +16,8 @@ export default class Renderer {
     alpha: true,
     antialias: true
   });
+
+  test: any[] = [];
 
   constructor() {
     this.camera = new Camera();
@@ -29,9 +32,12 @@ export default class Renderer {
     // Request first animation frame    
     Renderer.Scene.add(new THREE.AmbientLight(0xffffff, 0.1));
     container.appendChild(this.renderer.domElement);
-    this.renderer.setSize(container.clientWidth, container.clientHeight);
-    this.renderer.setAnimationLoop(this.renderScene);
     this.window.update();
+    this.renderer.setAnimationLoop(this.renderScene);
+    this.renderer.setSize(container.clientWidth, container.clientHeight);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
 
     // Temp
     var cube1 = new Cube3D();
@@ -41,17 +47,13 @@ export default class Renderer {
   }
 
   private renderScene = () => {
-    /* Camera rotation on mouse
-    // this.camera.position.x += (this.mouse.x - this.camera.position.x) * 0.05;
-    // this.camera.position.y += (-this.mouse.y - this.camera.position.y) * 0.05;
-    */
     this.camera.lookAt(Renderer.Scene.position);
     this.raycaster.setFromCamera(this.mouse, this.camera);
-
-    var intersects = this.raycaster.intersectObjects(Renderer.Scene.children, true);
-    intersects.forEach(intersection => {
-      console.debug((intersection.object as any).constructor.name);
-    });
+    var intersects = this.raycaster.intersectObjects(Renderer.Scene.children);
+    
+    for (var i = 0; i < intersects.length; i++) {
+      console.debug((intersects[i].object as any).constructor.name);
+    };
     /*if (intersects.length > 0) {
       if (this.INTERSECTED != intersects[0].object.position) {
         if (this.INTERSECTED) this.INTERSECTED.material.emissive.setHex(this.INTERSECTED.currentHex);

@@ -1,14 +1,14 @@
 import * as THREE from "three";
-import { BufferGeometry } from "three";
+import { BufferGeometry, Geometry } from "three";
 import Renderer from "../Renderer";
 
-export default class Cube3D extends BufferGeometry {
-  material = new THREE.MeshLambertMaterial();
+export default class Cube3D extends Geometry {
+  material = new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
   mesh = new THREE.Mesh();
 
   constructor() {
     super();
-    this.copy(new THREE.BoxBufferGeometry(50, 50, 50));
+    this.copy(new THREE.BoxGeometry(50, 50, 50, 5, 5, 5));
     this.mesh.geometry = this;
     this.mesh.material = this.material;
     Renderer.Scene.add(this.mesh);
