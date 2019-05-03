@@ -20,10 +20,6 @@ export default class Renderer {
   });
   window = new Window(this.renderer, this.camera);
 
-  constructor() {
-    Renderer.Scene.add(new THREE.AmbientLight(0xffffff, 0.1));
-  }
-
   public mount(container: Element) {
     container.appendChild(this.renderer.domElement);
     this.renderer.setSize(container.clientWidth, container.clientHeight);
@@ -32,11 +28,6 @@ export default class Renderer {
     this.window.onWindowResize();
 
     // Temp
-    var geometry = new THREE.PlaneBufferGeometry(1000, 1000, 100, 100);
-    var material = new THREE.MeshBasicMaterial({ wireframe: true, opacity: 0.5, transparent: true });
-    var grid = new THREE.Mesh(geometry, material);
-    grid.rotation.x = - Math.PI / 2;
-    Renderer.Scene.add(grid);
     new Cube3D();
   }
 

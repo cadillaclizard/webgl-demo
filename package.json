@@ -26,7 +26,9 @@
     "webpack-dev-server": "^3.3.1"
   },
   "scripts": {
-    "server:open": "webpack-dev-server --hot --color --open",
-    "server": "webpack-dev-server --hot --color"
+    "server:hot:open": "webpack-dev-server --hot --color --open",
+    "server:hot": "webpack-dev-server --hot --color",
+    "server:open": "webpack-dev-server --color --open",
+    "server": "webpack-dev-server --color"
   }
 }

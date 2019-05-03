@@ -3,14 +3,13 @@ import { BufferGeometry, Geometry } from "three";
 import Renderer from "../Renderer";
 
 export default class Cube3D extends Geometry {
-  material = new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
   mesh = new THREE.Mesh();
 
   constructor() {
     super();
     this.copy(new THREE.BoxGeometry(10, 10, 10));
     this.mesh.geometry = this;
-    this.mesh.material = this.material;
+    this.mesh.material = new THREE.MeshNormalMaterial();
     Renderer.Scene.add(this.mesh);
     this.setAt0Y()
     this.mesh.onAfterRender = () => {
