@@ -8,7 +8,7 @@ export default class Cube3D extends Geometry {
 
   constructor() {
     super();
-    this.copy(new THREE.BoxGeometry(50, 50, 50, 5, 5, 5));
+    this.copy(new THREE.BoxGeometry(10, 10, 10));
     this.mesh.geometry = this;
     this.mesh.material = this.material;
     Renderer.Scene.add(this.mesh);

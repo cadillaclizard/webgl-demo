@@ -1,9 +1,9 @@
 import * as THREE from "three";
-import Camera from "./Camera";
+import IsometricCamera from "./IsometricCamera";
 
 export default class Window {
 
-  constructor(private renderer: THREE.Renderer, private camera: Camera) {
+  constructor(private renderer: THREE.Renderer, private camera: IsometricCamera) {
     window.addEventListener("resize", this.onWindowResize, false);
   }
 
