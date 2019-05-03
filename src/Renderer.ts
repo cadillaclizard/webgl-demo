@@ -1,10 +1,10 @@
 import * as THREE from "three";
-import Cube3D from "./Util/Cube3D";
 import Mouse from "./Util/Mouse";
 import IsometricCamera from "./Util/IsometricCamera";
 import Window from "./Util/Window";
 import Helpers from "./Util/Helpers";
 import IsometricOrbitControls from "./Util/IsometricOrbitControls";
+import World from "./Util/World";
 
 export default class Renderer {
   static Scene = new THREE.Scene();
@@ -27,8 +27,8 @@ export default class Renderer {
     this.renderer.setAnimationLoop(this.renderScene);
     this.window.onWindowResize();
 
-    // Temp
-    new Cube3D();
+    var world = new World();
+    world.generateTerrain();
   }
 
   private renderScene = () => {

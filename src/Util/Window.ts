@@ -7,7 +7,7 @@ export default class Window {
     window.addEventListener("resize", this.onWindowResize, false);
   }
 
-  public onWindowResize = () => {
+  onWindowResize = () => {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();    

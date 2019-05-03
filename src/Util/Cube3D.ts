@@ -2,25 +2,15 @@ import * as THREE from "three";
 import { BufferGeometry, Geometry } from "three";
 import Renderer from "../Renderer";
 
-export default class Cube3D extends Geometry {
+export default class Cube3D extends BufferGeometry {
   mesh = new THREE.Mesh();
 
-  constructor() {
+  constructor(x: number, y: number, z: number) {
     super();
-    this.copy(new THREE.BoxGeometry(10, 10, 10));
+    this.copy(new THREE.BoxBufferGeometry(10, 10, 10));
     this.mesh.geometry = this;
     this.mesh.material = new THREE.MeshNormalMaterial();
+    this.translate(10 * x + 5, 10 * y + 5, 10 * z + 5)
     Renderer.Scene.add(this.mesh);
-    this.setAt0Y()
-    this.mesh.onAfterRender = () => {
-      this.mesh.rotateX(0.01);
-      this.mesh.rotateZ(0.01);
-    };
-  }
-
-  private setAt0Y() {
-    this.mesh.geometry.computeBoundingBox();
-    var boundingBox = this.mesh.geometry.boundingBox;
-    this.mesh.translateY(-boundingBox.min.y);
   }
 }
