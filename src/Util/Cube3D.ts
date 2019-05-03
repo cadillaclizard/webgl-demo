@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import { BufferGeometry, Geometry } from "three";
+import * as THREE from "three-full";
+import { BufferGeometry, Geometry } from "three-full";
 import Renderer from "../Renderer";
 
 export default class Cube3D extends Geometry {
@@ -13,7 +13,10 @@ export default class Cube3D extends Geometry {
     this.mesh.material = this.material;
     Renderer.Scene.add(this.mesh);
     this.setAt0Y()
-    this.mesh.onAfterRender = () => this.mesh.rotateY(0.01);
+    this.mesh.onAfterRender = () => {
+      this.mesh.rotateX(0.01);
+      this.mesh.rotateZ(0.01);
+    };
   }
 
   private setAt0Y() {

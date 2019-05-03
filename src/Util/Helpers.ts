@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "three-full";
 import Renderer from "../Renderer";
 
 export default class Helpers {

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "normalize.css": "^8.0.1",
-    "three": "^0.101.1",
+    "three-full": "^17.1.0",
+    "three-orbit-controls": "^82.1.0",
     "typeface-lato": "0.0.54",
     "vue": "^2.6.10"
   },

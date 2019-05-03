@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "three-full";
 import IsometricCamera from "./IsometricCamera";
 
 export default class Window {
@@ -7,11 +7,9 @@ export default class Window {
     window.addEventListener("resize", this.onWindowResize, false);
   }
 
-  private onWindowResize = () => {
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
+  public onWindowResize = () => {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();    
   }
-
-  update() { this.onWindowResize(); }
 }
