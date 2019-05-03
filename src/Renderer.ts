@@ -1,4 +1,4 @@
-import * as THREE from "three-full";
+import * as THREE from "three";
 import Cube3D from "./Util/Cube3D";
 import Mouse from "./Util/Mouse";
 import IsometricCamera from "./Util/IsometricCamera";

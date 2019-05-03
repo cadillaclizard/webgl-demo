@@ -1,4 +1,4 @@
-import * as THREE from "three-full";
+import * as THREE from "three";
 
 export default class Mouse extends THREE.Vector3 {
   constructor() {

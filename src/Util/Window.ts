@@ -1,4 +1,4 @@
-import * as THREE from "three-full";
+import * as THREE from "three";
 import IsometricCamera from "./IsometricCamera";
 
 export default class Window {

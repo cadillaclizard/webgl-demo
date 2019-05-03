@@ -1,5 +1,5 @@
 import * as THREE from "three-full";
-import { BufferGeometry, Geometry } from "three-full";
+import { BufferGeometry, Geometry } from "three";
 import Renderer from "../Renderer";
 
 export default class Cube3D extends Geometry {

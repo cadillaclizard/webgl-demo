@@ -1,5 +1,5 @@
 import IsometricCamera from "./IsometricCamera";
-import * as THREE from "three-full";
+import * as THREE from "three";
 
 export default class IsometricOrbitControls extends THREE.OrbitControls {
   constructor(camera: IsometricCamera) {
