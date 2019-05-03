@@ -8,7 +8,7 @@ export default class Camera extends THREE.PerspectiveCamera {
     Renderer.Scene.add(this);
     Renderer.Scene.add(new THREE.AmbientLight(0x4444444));
 
-    this.position.set(-1, 500, -1);
+    this.position.set(0, 500, 0);
     this.rotation.y = - Math.PI / 4;
     this.rotation.x = Math.PI / 4;
   }

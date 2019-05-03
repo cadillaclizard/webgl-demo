@@ -7,11 +7,12 @@ export default class Helpers {
     Renderer.Scene.add(new THREE.AxesHelper(10000));
     Renderer.Scene.add(new THREE.AxesHelper(-10000));
 
-    // Grund grid
-    var geometry = new THREE.PlaneBufferGeometry(1000, 1000, 100, 100);
-    var material = new THREE.MeshBasicMaterial({ wireframe: true, opacity: 0.25, transparent: true });
-    var grid = new THREE.Mesh(geometry, material);
-    grid.rotation.x = Math.PI / 2;
+    // Grid
+    var gridGeometry = new THREE.PlaneBufferGeometry(1000, 1000, 100, 100);
+    var gridMaterial = new THREE.MeshBasicMaterial({ wireframe: true, opacity: 0.25, transparent: true, side: THREE.DoubleSide });
+    gridGeometry.rotateX(Math.PI / 2);
+    var grid = new THREE.Mesh(gridGeometry, gridMaterial);
+    grid.name = "grid";
     Renderer.Scene.add(grid);
   }
 }

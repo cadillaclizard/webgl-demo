@@ -10,8 +10,9 @@ export default class Renderer {
   static Scene = new THREE.Scene();
 
   helpers = new Helpers();
-  camera = new IsometricCamera();
+  camera = new IsometricCamera();  
   controls = new IsometricOrbitControls(this.camera);
+  world = new World(this.camera);
   mouse = new Mouse();
   raycaster = new THREE.Raycaster();
   renderer = new THREE.WebGLRenderer({
@@ -26,9 +27,7 @@ export default class Renderer {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setAnimationLoop(this.renderScene);
     this.window.onWindowResize();
-
-    var world = new World();
-    world.generateTerrain();
+    this.controls.addEventListener("change", () => this.world.update());
   }
 
   private renderScene = () => {

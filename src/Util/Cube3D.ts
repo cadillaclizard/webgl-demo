@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { BufferGeometry, Geometry } from "three";
+import { BufferGeometry } from "three";
 import Renderer from "../Renderer";
 
 export default class Cube3D extends BufferGeometry {
@@ -11,6 +11,7 @@ export default class Cube3D extends BufferGeometry {
     this.mesh.geometry = this;
     this.mesh.material = new THREE.MeshNormalMaterial();
     this.translate(10 * x + 5, 10 * y + 5, 10 * z + 5)
+    this.mesh.name = "cube";
     Renderer.Scene.add(this.mesh);
   }
 }
