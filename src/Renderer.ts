@@ -26,6 +26,7 @@ export default class Renderer {
     this.renderer.setSize(container.clientWidth, container.clientHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setAnimationLoop(this.renderScene);
+    this.renderer.shadowMap.enabled = true;
     this.window.onWindowResize();
     this.controls.addEventListener("change", () => this.world.update());
   }

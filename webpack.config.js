@@ -4,6 +4,7 @@ const path = require("path");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -33,12 +34,12 @@ module.exports = {
         use: ['vue-style-loader', 'css-loader', 'sass-loader']
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot|svg)$/,
         use: [{
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'fonts'
+            outputPath: 'static'
           }
         }]
       }
@@ -47,7 +48,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist/**/*']),
     new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({ template: './src/index.html' })
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new CopyWebpackPlugin([{ from: 'static', to: 'static' }])
   ],
   resolve: {
     alias: { 'vue$': 'vue/dist/vue.esm.js' },
