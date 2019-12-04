@@ -9,5 +9,5 @@ export default class IsometricOrbitControls extends OrbitControls {
   enableZoom = true;
   enablePan = true;
 
-  mouseButtons = { LEFT: MOUSE.MIDDLE, undefined, RIGHT: MOUSE.RIGHT } as any;
+  mouseButtons = { LEFT: MOUSE.RIGHT, RIGHT: MOUSE.LEFT } as any;
 }

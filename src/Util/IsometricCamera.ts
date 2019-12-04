@@ -27,8 +27,9 @@ export default class IsometricCamera extends THREE.PerspectiveCamera {
     hemiLight.position.set(0, 50, 0);
     Renderer.Scene.add(new THREE.HemisphereLightHelper(hemiLight, 10));
 
-    this.position.set(25, 100, 25);
+
     this.rotation.y = - Math.PI / 4;
     this.rotation.x = Math.PI / 4;
+    this.position.set(50, 50, 50);
   }
 }

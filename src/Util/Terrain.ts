@@ -8,7 +8,7 @@ export default class Terrain {
   noise = new SimplexNoise(`0`);
 
 
-  constructor(position: Vector2, public radius = 25) {
+  constructor(position: Vector2, public radius = 50) {
     this.position = position;
     this.mesh.geometry = new BufferGeometry();
     this.mesh.material = new MeshPhongMaterial({ flatShading: true, color: new Color(0x7cfc00) })
