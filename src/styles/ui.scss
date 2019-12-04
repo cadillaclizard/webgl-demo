@@ -1,0 +1,16 @@
+#UI {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+
+  .top {
+    width: 100vw;
+    height: 100px;
+    padding: 50px 25px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 5px;
+    font-size: 26px;
+  }
+}

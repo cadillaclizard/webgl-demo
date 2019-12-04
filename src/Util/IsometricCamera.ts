@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 import Renderer from "../Renderer";
 
-export default class Camera extends THREE.PerspectiveCamera {
+export default class IsometricCamera extends THREE.PerspectiveCamera {
   constructor() {
     super(45, 4 / 3, 1, 100000);
     var dirLight = new THREE.DirectionalLight(0xffffff, 1);

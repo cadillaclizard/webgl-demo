@@ -1,8 +1,7 @@
 // webpack.config.js
 
 const path = require("path");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -10,7 +9,7 @@ module.exports = {
   mode: 'development',
   entry: './src/index.ts',
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'build'),
     filename: 'app.js'
   },
   devServer: {
@@ -20,19 +19,11 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      {
-        test: /\.ts$/,
-        loader: 'ts-loader',
-        options: { appendTsSuffixTo: [/\.vue$/] }
-      },
-      {
-        test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader']
-      },
+      // Typescript
+      { test: /\.ts$/, loader: 'ts-loader' },
+      // CSS / SCSS
+      { test: /\.s?css$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
+      // Fonts
       {
         test: /\.(woff(2)?|ttf|eot|svg)$/,
         use: [{
@@ -46,13 +37,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['dist/**/*']),
-    new VueLoaderPlugin(),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new CopyWebpackPlugin([{ from: 'static', to: 'static' }])
   ],
   resolve: {
-    alias: { 'vue$': 'vue/dist/vue.esm.js' },
-    extensions: ['.ts', '.js', '.json']
+    extensions: ['.ts', '.js']
   }
 };

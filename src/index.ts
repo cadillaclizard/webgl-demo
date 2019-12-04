@@ -1,10 +1,5 @@
-import Vue from 'vue';
-import AppCmp from './App.vue';
+import "./styles/index.scss"
+import Renderer from "./Renderer";
 
-new Vue({
-  el: '#app',
-  template: `<app-cmp />`,
-  components: {
-    AppCmp
-  }
-});
+var renderer = new Renderer();
+renderer.mount(document.body);

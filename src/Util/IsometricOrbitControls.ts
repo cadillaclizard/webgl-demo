@@ -1,4 +1,4 @@
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import { MOUSE, Camera } from "three";
 
 export default class IsometricOrbitControls extends OrbitControls {
