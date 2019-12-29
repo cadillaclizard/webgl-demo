@@ -8,40 +8,18 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: './src/index.ts',
-  output: {
-    path: path.join(__dirname, 'build'),
-    filename: 'app.js'
-  },
-  devServer: {
-    historyApiFallback: true,
-    filename: 'app.js',
-    compress: true
-  },
+  output: { path: path.join(__dirname, 'dist') },
+  devServer: { contentBase: './dist' },
+  resolve: { extensions: ['.ts', '.js'] },
   module: {
     rules: [
-      // Typescript
       { test: /\.ts$/, loader: 'ts-loader' },
-      // CSS / SCSS
       { test: /\.s?css$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
-      // Fonts
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'static'
-          }
-        }]
-      }
     ]
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new CopyWebpackPlugin([{ from: 'static', to: 'static' }])
-  ],
-  resolve: {
-    extensions: ['.ts', '.js']
-  }
+  ]
 };

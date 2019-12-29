@@ -1,5 +1,5 @@
 @import '~normalize.css/normalize.css';
-@import '~typeface-lato/index.css';
+* {box-sizing: border-box;}
 
 body {
   color: #05396BFF;
@@ -9,4 +9,3 @@ body {
   width: 100vw;
   height: 100vh;
 }
-* {box-sizing: border-box;}
