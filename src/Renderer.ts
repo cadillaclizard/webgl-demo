@@ -1,11 +1,11 @@
 import * as THREE from "three";
-import StatsUI from "./util/StatsUI"
-import Mouse from "./util/Mouse";
-import IsometricCamera from "./util/IsometricCamera";
-import Window from "./util/Window";
-import Helpers from "./util/Helpers";
-import IsometricOrbitControls from "./util/IsometricOrbitControls";
-import World from "./util/World";
+import StatsUI from "./Game/StatsUI"
+import Mouse from "./Game/Mouse";
+import IsometricCamera from "./Game/IsometricCamera";
+import Window from "./Game/Window";
+import Helpers from "./Game/Helpers";
+import IsometricOrbitControls from "./Game/IsometricOrbitControls";
+import World from "./Game/World";
 
 export default class Renderer {
   static Scene = new THREE.Scene();
